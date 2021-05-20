@@ -114,8 +114,8 @@ while True:
             ContadorSaidas += 1
 
     #Teste para salvar em arquivo
-    arquivo = open("entrada.txt", "a")
-    arquivo.write(str(ContadorEntradas) + "\n")
+    arquivo = open("dados.txt", "a")
+    arquivo.write(str(ContadorEntradas) + ";" + str(ContadorSaidas) + ";\n")
         
     #print "Contornos encontrados: "+str(QtdeContornos)
     print "Contornos: "+str(QtdeContornos)+" Entradas: "+str(ContadorEntradas)+" Saidas: "+str(ContadorSaidas)
