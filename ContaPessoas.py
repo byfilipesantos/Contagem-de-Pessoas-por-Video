@@ -113,6 +113,10 @@ while True:
         if (TestaInterseccaoSaida(CoordenadaYCentroContorno,CoordenadaYLinhaEntrada,CoordenadaYLinhaSaida)):
             ContadorSaidas += 1
 
+    #Teste para salvar em arquivo
+    arquivo = open("entrada.txt", "a")
+    arquivo.write(str(ContadorEntradas) + "\n")
+        
     #print "Contornos encontrados: "+str(QtdeContornos)
     print "Contornos: "+str(QtdeContornos)+" Entradas: "+str(ContadorEntradas)+" Saidas: "+str(ContadorSaidas)
 
@@ -125,6 +129,6 @@ while True:
     cv2.waitKey(1);
 
 
-# cleanup the camera and close any open windows
+#fecha a câmera e todas janelas abertas
 camera.release()
 cv2.destroyAllWindows()
