@@ -34,21 +34,20 @@ def testaInterseccaoSaida(y, coordenadaYLinhaEntrada, coordenadaYLinhaSaida):
     else:
         return 0
 
-camera = cv2.VideoCapture(0)
+webCam = cv2.VideoCapture(0)
 
-# Forca resolucao de 1024x768 na camera
-camera.set(3,1024)
-camera.set(4,768)
-
+# Forca resolucao de 1024x768 na webCam
+webCam.set(3,1024)
+webCam.set(4,768)
 primeiroFrame = None
 
-# Realiza algumas leituras antes de iniciar a analise a fim da camera se acostumar com a luminosidade do local
+# Realiza algumas leituras antes de iniciar a analise a fim da webCam se acostumar com a luminosidade do local
 for i in range(0,20):
-    (grabbed, Frame) = camera.read()
+    (grabbed, Frame) = webCam.read()
 
 while True:
     # Le o primeiro frame e determina resolucao da imagem
-    (grabbed, Frame) = camera.read()
+    (grabbed, Frame) = webCam.read()
     altura = np.size(Frame,0)
     largura = np.size(Frame,1)
 
@@ -64,12 +63,10 @@ while True:
     if primeiroFrame is None:
         primeiroFrame = frameGray
         continue
-    
-    FrameDelta = cv2.absdiff(primeiroFrame, frameGray)
-    FrameThresh = cv2.threshold(FrameDelta, ThresholdBinarizacao, 255, cv2.THRESH_BINARY)[1]
-    FrameThresh = cv2.dilate(FrameThresh, None, iterations=2)
-    _, cnts, _ = cv2.findContours(FrameThresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-
+    FrameDelta = cv2.absdiff(primeiroFrame, frameGray) # Calcula a diferença entre dois frames
+    FrameThresh = cv2.threshold(FrameDelta, ThresholdBinarizacao, 255, cv2.THRESH_BINARY)[1] # Filtro do OpenCV
+    FrameThresh = cv2.dilate(FrameThresh, None, iterations=2) # Dilata a imagem
+    _, cnts, _ = cv2.findContours(FrameThresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) # Procura contornos na imagem
     contaContornos = 0
 
     # Desenha linhas de referencia 
@@ -78,20 +75,14 @@ while True:
     cv2.line(Frame, (0,coordenadaYLinhaEntrada), (largura,coordenadaYLinhaEntrada), (255, 0, 0), 2)
     cv2.line(Frame, (0,coordenadaYLinhaSaida), (largura,coordenadaYLinhaSaida), (0, 0, 255), 2)
 
-
     # Percorre todos os contornos encontrados
     for c in cnts:
-        # Ignora os contornos de areas muito pequenas
-        if cv2.contourArea(c) < AreaContornoLimiteMin:
+        if cv2.contourArea(c) < AreaContornoLimiteMin:  # Ignora os contornos de areas muito pequenas
             continue
-
-        # Contabiliza os contornos encontrados para fins de depuracao
-        contaContornos = contaContornos+1    
+        contaContornos = contaContornos+1   # Contabiliza os contornos encontrados para fins de depuracao
 
         # Obtem coordenadas do contorno e realca o contorno com um retangulo
-        (x, y, w, h) = cv2.boundingRect(c) #x e y: coordenadas do vertice superior esquerdo
-                                           #w e h: respectivamente largura e altura do retangulo
-
+        (x, y, w, h) = cv2.boundingRect(c) # x e y: coordenadas do vertice superior esquerdo w e h: respectivamente largura e altura do retangulo
         cv2.rectangle(Frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
         # Desenha um circulo para indicar o ponto central do contorno
@@ -114,9 +105,6 @@ while True:
             arquivo.write(str(contaEntrada) + ";" + str(contaSaida) + ";\n")
             arquivo.close()
     
-    # Imprime em tela as informacoes de entrada e saida
-    #print "Contornos: "+str(contaContornos)+" Entradas: "+str(contaEntrada)+" Saidas: "+str(contaSaida)
-    
     # Escreve na imagem o numero de pessoas que entraram ou sairam. Se deixar comentada as proximas 6 linhas, o programa podera ser executado via ssh tambem
     cv2.putText(Frame, "Entradas: {}".format(str(contaEntrada)), (10, 50),
                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, (250, 0, 1), 2)
@@ -125,6 +113,5 @@ while True:
     cv2.imshow("Trabalho de Sistemas Microprocessados Avancados", Frame)
     cv2.waitKey(1);
 
-# Limpa a camera e fecha as janelas abertas
-camera.release()
-cv2.destroyAllWindows()
+webCam.release()    # Limpa a imagem da WebCam obtida pelo OpenCV
+cv2.destroyAllWindows() # Fecha todas janelas abertas
