@@ -42,7 +42,7 @@ def testaInterseccaoSaida(y, linhaEntrada, linhaSaida):
 cam = cv2.VideoCapture(0)
 
 # Abre fluxo video Camera Intelbras utilizando protocolo RTSP
-#cam = cv2.VideoCapture(rtsp://admin:VH4AX674@192.168.0.104:554/cam/realmonitor?channel=1&subtype=0)
+#cam = cv2.VideoCapture(rtsp://admin:SENHA@192.168.0.104:554/cam/realmonitor?channel=1&subtype=0)
 
 # Forca resolucao de 1024x768 na camera
 cam.set(3,1024)
