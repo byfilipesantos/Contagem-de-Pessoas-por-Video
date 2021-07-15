@@ -42,7 +42,7 @@ def testaInterseccaoSaida(y, linhaEntrada, linhaSaida):
 cam = cv2.VideoCapture(0)
 
 # Abre fluxo video Camera Intelbras utilizando protocolo RTSP
-#cam = cv2.VideoCapture(rtsp://admin:SENHA@192.168.0.104:554/cam/realmonitor?channel=1&subtype=0)
+#cam = cv2.VideoCapture('rtsp://admin:VH4AX674@192.168.0.104:554/cam/realmonitor?channel=1&subtype=0')
 
 # Forca resolucao de 1024x768 na camera
 cam.set(3,1024)
@@ -77,7 +77,6 @@ while True:
     FrameThresh = cv2.threshold(FrameDelta, limiarBinarizacao, 255, cv2.THRESH_BINARY)[1] # Filtro Limiar do OpenCV
     FrameThresh = cv2.dilate(FrameThresh, None, iterations=2) # Dilata a imagem
     _, cnts, _ = cv2.findContours(FrameThresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) # Procura contornos na imagem
-    #contaContornos = 0
 
     # Desenha linhas de entrada e saida
     linhaEntrada = (altura / 2)-posicaoLinhas
@@ -89,7 +88,6 @@ while True:
     for c in cnts:
         if cv2.contourArea(c) < areaContornoMin:  # Ignora os contornos de areas muito pequenas
             continue
-        #contaContornos = contaContornos+1   # Contabiliza os contornos encontrados para fins de depuracao
 
         # Obtem coordenadas do contorno e realca o contorno com um retangulo
         (x, y, w, h) = cv2.boundingRect(c) # x e y: coordenadas do vertice superior esquerdo w e h: respectivamente largura e altura do retangulo
