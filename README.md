@@ -15,22 +15,24 @@ Para realização deste projeto, foi utilizado os seguintes materiais:
 - WebCam Multilaser;
 - Câmera de Segurança Intelbras Mibo iM4.
 
-O que foi feito
+## O que foi feito
      Primeiramente instalamos o Sistema Operacional Raspbian (versão 10 Buster), após instalado, atualizamos o sistema, liberamos acesso remoto via VNC e SSH e na sequência fizemos liberações de firewall para permitir o acesso remoto, bem como o tráfego de dados na porta 80.
 O próximo passo foi fazer a instalação do Python 3 e OpenCV, juntamente com algumas dependências obrigatórias para seu funcionamento. A instalação demorou pouco mais de 5 horas para ser finalizada, visto que o OpenCV para melhor funcionamento recomenda-se ser compilado e esta é a etapa mais demorada do processo.
 A próxima etapa foi a instalação do Apache e configuração para funcionamento da nossa página onde é exibida os nossos dados de entrada e saída. Uma configuração adicional que foi feita no apache foi a habilitação para funcionamento do CGI (common gateway interface) que é um elemento que proporciona uma ligação entre a nossa página html e o sistema operacional. Dentro do CGI utilizamos alguns comandos linux para coleta dos dados salvos.
 
 
 ![IMG-01](https://user-images.githubusercontent.com/42256808/125874144-d4dfaf25-433e-4029-93b2-e6419d0f14d8.png)
+
 Figura 1 - Tecnologia utilizada para exibir os dados
 
-Como foi feito
-     A contagem de objetos é baseada nas seguintes características:
-São detectados apenas objetos em movimento;
-É avaliado a direção do movimento do objeto;
-Somente é contabilizado objetos que cruzarem as linhas de entrada ou saída;
 
-Desta maneira é possível definir quantos objetos entraram ou saíram da área monitorada.
+## Como foi feito
+A contagem de objetos é baseada nas seguintes características:
+- São detectados apenas objetos em movimento;
+- É avaliado a direção do movimento do objeto;
+- Somente é contabilizado objetos que cruzarem as linhas de entrada ou saída;
+- Desta maneira é possível definir quantos objetos entraram ou saíram da área monitorada.
+
 
 ![IMG-02](https://user-images.githubusercontent.com/42256808/125874540-2bd62e74-1ce7-490b-b47e-59cf7d98604a.png)
 Figura 2 - Definições da área monitorada
@@ -60,13 +62,14 @@ Para realizar a leitura dos dados obtidos pela câmera, criamos uma página html
 Dentro do diretório “/usr/lib/cgi-bin/” criamos o nosso “index.cgi” que é chamado pela página html citada anteriormente. Apesar do CGI ser de certa forma ultrapassado, optamos pela utilização do mesmo devido a facilidade de execução de códigos shell. Na imagem abaixo fica bem claro a estrutura do código CGI, que basicamente é formado por códigos html além de duas execuções paralelas do comando “tail”, uma para leitura da entrada e uma para leitura da saída.
 
 
-![IMG-05](https://user-images.githubusercontent.com/42256808/125874543-ec74132a-2a40-4856-a69d-9ea27d94df0c.PNG)
+![IMG-06](https://user-images.githubusercontent.com/42256808/125874537-56dc9a13-5f11-4e19-95ca-89fd4061d59e.PNG)
 Figura 6 - Arquivo “index.cgi”
 
 
     Por fim, chegamos a nossa tela que pode ser acessada por qualquer dispositivo que tenha acesso a rede local onde encontrasse o Raspberry instalado. Para disponibilizar o acesso a esta página, além do “index.html” e o “index.cgi”, foi necessário fazer algumas configurações básicas no apache.
 
-![IMG-06](https://user-images.githubusercontent.com/42256808/125874537-56dc9a13-5f11-4e19-95ca-89fd4061d59e.PNG)
+
+![IMG-05](https://user-images.githubusercontent.com/42256808/125874543-ec74132a-2a40-4856-a69d-9ea27d94df0c.PNG)
 Figura 7 - Tela de monitoramento
 
 Referências
