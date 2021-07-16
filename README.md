@@ -46,9 +46,11 @@ Os frames obtidos através da captura de vídeo são tratados por meio da biblio
 Para o desenvolvimento do trabalho, criamos um diretório com o nome “Projeto” dentro de /home/pi. Dentro do diretório “/home/pi/Projeto/” encontrasse o código principal do projeto com nome de “ContaPessoas.py” e dois arquivos de dados, o “dados.txt” que contém todos os registros de entrada/saída e o arquivo “dados-backup.txt” que é o arquivo de dados referente a última execução do programa.
 
 ![IMG-03](https://user-images.githubusercontent.com/42256808/125874541-09186b65-f521-4cfc-b18d-6f34786ab76b.PNG)
+
 Figura 3 - Arquivos do projeto
 
-     Para executar o programa, entramos no diretório “/home/pi/Projeto/” e utilizamos o comando “python ContaPessoas.py”. Uma das primeiras coisas que o programa irá fazer será mover o arquivo “dados.txt” para “dados-backup.txt” a fim de preservar a informação da última execução do programa. O programa irá abrir uma janela exibindo a imagem da câmera, as linhas de entrada e saída e os valores retornados da quantidade de objetos em movimento que entraram e saíram da área monitorada.
+
+Para executar o programa, entramos no diretório “/home/pi/Projeto/” e utilizamos o comando “python ContaPessoas.py”. Uma das primeiras coisas que o programa irá fazer será mover o arquivo “dados.txt” para “dados-backup.txt” a fim de preservar a informação da última execução do programa. O programa irá abrir uma janela exibindo a imagem da câmera, as linhas de entrada e saída e os valores retornados da quantidade de objetos em movimento que entraram e saíram da área monitorada.
 
 ![crossline_system](https://user-images.githubusercontent.com/42256808/125875040-0bb49e16-ae53-4a43-97e3-84e6c5b064ae.jpg)
 Figura 4 - Imagem de como ficou instalada a câmera
@@ -56,23 +58,28 @@ Figura 4 - Imagem de como ficou instalada a câmera
 Os dados de entrada e saída, salvos com nome “dados.txt”, é formado por números inteiros e ponto e vírgula, organizados da seguinte forma: número de pessoas que entrou, ponto e vírgula, número de pessoas que saiu, ponto e vírgula e uma quebra de linha. A cada pessoa que entra ou sai, o programa grava os dados neste arquivo, sempre em uma nova linha. 
 
 ![IMG-04](https://user-images.githubusercontent.com/42256808/125874542-1a200789-b85d-449a-86c0-f057e58f1ff4.PNG)
+
 Figura 5 - Arquivo “dados.txt”
+
 
 Para realizar a leitura dos dados obtidos pela câmera, criamos uma página html com nome de “index.html” dentro do diretório “/var/www/html/”. Esta página é extremamente simples pois ela apenas faz uma chamada para nosso arquivo CGI que é responsável por mostrar o resultado obtido nas leituras e saídas do local. 
 Dentro do diretório “/usr/lib/cgi-bin/” criamos o nosso “index.cgi” que é chamado pela página html citada anteriormente. Apesar do CGI ser de certa forma ultrapassado, optamos pela utilização do mesmo devido a facilidade de execução de códigos shell. Na imagem abaixo fica bem claro a estrutura do código CGI, que basicamente é formado por códigos html além de duas execuções paralelas do comando “tail”, uma para leitura da entrada e uma para leitura da saída.
 
 
 ![IMG-06](https://user-images.githubusercontent.com/42256808/125874537-56dc9a13-5f11-4e19-95ca-89fd4061d59e.PNG)
+
 Figura 6 - Arquivo “index.cgi”
 
 
-    Por fim, chegamos a nossa tela que pode ser acessada por qualquer dispositivo que tenha acesso a rede local onde encontrasse o Raspberry instalado. Para disponibilizar o acesso a esta página, além do “index.html” e o “index.cgi”, foi necessário fazer algumas configurações básicas no apache.
+Por fim, chegamos a nossa tela que pode ser acessada por qualquer dispositivo que tenha acesso a rede local onde encontrasse o Raspberry instalado. Para disponibilizar o acesso a esta página, além do “index.html” e o “index.cgi”, foi necessário fazer algumas configurações básicas no apache.
 
 
 ![IMG-05](https://user-images.githubusercontent.com/42256808/125874543-ec74132a-2a40-4856-a69d-9ea27d94df0c.PNG)
+
 Figura 7 - Tela de monitoramento
 
-Referências
+
+## Referências
 https://www.raspberrypi.org/
 https://opencv.org/
 https://www.pyimagesearch.com/2016/04/18/install-guide-raspberry-pi-3-raspbian-jessie-opencv-3/
